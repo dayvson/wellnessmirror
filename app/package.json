@@ -1,0 +1,16 @@
+{
+  "author": "Maria Paula/ Maxwell Dayvson Silva <maria@gmail.com>",
+  "name": "mirror",
+  "description": "-",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "3.x",
+    "memory-cache": "*",
+    "ejs": "*",
+    "request": "*"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}

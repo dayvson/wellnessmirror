@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title> Slide </title>
+		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+	</head>
+	<body>
+		<form>
+			<input type="range" name="points" min="0" max="255" id="red"/> #red <br />
+			<input type="range" name="points" min="0" max="255" id="green"/> #green<br />
+			<input type="range" name="points" min="0" max="255" id="blue"/> #blue
+		</form>
+
+		<script>
+			
+
+			$(function(){
+				$("#red, #green, #blue")
+			    .on('change',function(value) {
+			        
+			        function success(data){
+			        	console.log("complete", data);
+			        };
+
+			        var data = {"red": $("#red").val(), "green": $("#green").val(), "blue": $("#blue").val()};
+			        $.ajax({
+					  type: "POST",
+					  url: "http://localhost:3000/setcolor",
+					  data: data,
+					  success: success,
+					  dataType: "json"
+					});
+			    })
+			});
+		</script>
+	</body>
+</html>

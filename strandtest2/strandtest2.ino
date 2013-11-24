@@ -7,13 +7,13 @@
 #endif
 
 #define PIN 6
-#define totalLEDs 
+#define totalLEDs 20 
 /* NEO_RGB     Pixels are wired for RGB bitstream
    NEO_GRB     Pixels are wired for GRB bitstream
    NEO_KHZ400  400 KHz bitstream (e.g. FLORA pixels)
    NEO_KHZ800  800 KHz bitstream (e.g. High Density LED strip)*/
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
-Adafruit_NeoPixel strip2 = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(totalLEDs, PIN, NEO_GRB + NEO_KHZ800);
+
 
 long time;
 int value;
@@ -22,14 +22,6 @@ int periode = 2000;
 void setup() {
   // Initialize all pixels 
   Serial.begin(9600);
-  
-  Serial.println("F_CPU");
-  Serial.println(F_CPU);
-  Serial.println("######");
-  #ifdef _AVR_ATtiny85_ // Trinket, Gemma, etc.
-    Serial.println(clock_div_1);
-     if(F_CPU == 16000000) clock_prescale_set(clock_div_1);
-  #endif
   
   strip.begin();
  }
