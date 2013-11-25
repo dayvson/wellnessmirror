@@ -2,6 +2,8 @@
 
 //neopixels strip
 #include <Adafruit_NeoPixel.h>
+#include <Bridge.h>
+#include <HttpClient.h>
 
 /* NEO_RGB     Pixels are wired for RGB bitstream
  NEO_GRB     Pixels are wired for GRB bitstream
@@ -9,21 +11,38 @@
  NEO_KHZ800  800 KHz bitstream (e.g. High Density LED strip)*/
 #define TOTAL_STRIPS 2;
 long time;
+long interval = 2000; 
+long previousMillis = 0;
 int alpha;
 int periode = 2000;
 int totalStrips = TOTAL_STRIPS;
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(102, 5, NEO_GRB + NEO_KHZ800);
+char rChar[256];
+char gChar[256];
+char bChar[256];
+int r = 0;
+int g = 0;
+int b = 255;
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(102, 6, NEO_GRB + NEO_KHZ800);
 
 void setup() {
+  Bridge.begin();  // make contact with the linux processor
+
   initLeds();
 }
 
 void initLeds(){
+  
   strip.begin();
   strip.show();
 }
 void loop() {
-  fadeSlow(0, 0, 255);
+  fadeSlow(r, g, b);
+  Bridge.get("r", rChar, 256);
+  Bridge.get("g", gChar, 256);
+  Bridge.get("b", bChar, 256);
+  r = atoi(rChar);
+  g = atoi(gChar);
+  b = atoi(bChar);
 }
 
 void fadeSlow(int r, int g, int b){
