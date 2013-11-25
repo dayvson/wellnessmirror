@@ -3,8 +3,6 @@ var express = require('express');
 var app  = express();
 var common = require(__dirname + "/common");
 var memory = require("memory-cache");
-
-
 var FitbitProfile = require("temboo/Library/Fitbit/Profile");
 var getUserInfoChoreo = new FitbitProfile.GetUserInfo(common.session);
 var getUserInfoInputs = getUserInfoChoreo.newInputSet();
@@ -22,7 +20,4 @@ require(__dirname + "/auth")(app);
 require(__dirname + "/sleep")(app);
 require(__dirname + "/index")(app);
 
-
-
-
-app.listen(3000);
+app.listen(8080);
