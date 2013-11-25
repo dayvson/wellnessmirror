@@ -1,15 +1,43 @@
 <html>
 	<head>
-		<title> Slide </title>
-		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+		<title>Wellness Mirror</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="Maria Paula Saba/Maxwell Dayvson da Silva">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>
+		<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"/>
+		<style>
+
+		</style>
 	</head>
 	<body>
-		<form>
-			<input type="range" name="points" min="0" max="255" id="red"/> #red <br />
-			<input type="range" name="points" min="0" max="255" id="green"/> #green<br />
-			<input type="range" name="points" min="0" max="255" id="blue"/> #blue
-		</form>
+		<div class="container">
+			<div class="header">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li style="min-height:38px"><a href="#">About</a></li>
+          <li ><a href="#"><img src="<%= user.avatar %>" height="21" /> <%= user.nickname %></a></li>
+        </ul>
+        <h3 class="text-muted">Wellness Mirror</h3>
+      </div>
 
+			<div class="jumbotron">
+
+		        <form>
+					<input type="range" name="points" min="0" max="255" id="red"/> #red <br />
+					<input type="range" name="points" min="0" max="255" id="green"/> #green<br />
+					<input type="range" name="points" min="0" max="255" id="blue"/> #blue
+				</form>
+		    </div>
+		    <div class="footer">
+	        	<p>@2013</p>
+	      	</div>
+		</div>
+
+		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 		<script>
 			
 
@@ -32,5 +60,6 @@
 			    })
 			});
 		</script>
+	</body>
 	</body>
 </html>
