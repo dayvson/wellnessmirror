@@ -8,6 +8,7 @@
 		<meta name="author" content="Maria Paula Saba/Maxwell Dayvson da Silva">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>
 		<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"/>
+		<link href="/public/css/datepicker.css" rel="stylesheet">
 		<style>
 
 		</style>
@@ -26,9 +27,10 @@
 			<div class="jumbotron">
 
 		        <form>
-					<input type="range" name="points" min="0" max="255" id="red"/> #red <br />
-					<input type="range" name="points" min="0" max="255" id="green"/> #green<br />
-					<input type="range" name="points" min="0" max="255" id="blue"/> #blue
+					<div class="input-append date" id="datePicker" data-date="2013-11-10" data-date-format="yyyy-mm-dd">
+						<input class="span2" size="16" id="dataPickerField" type="text" value="2013-11-10" >
+						<span class="add-on"><i class="icon-calendar"></i></span>
+					</div>
 				</form>
 		    </div>
 		    <div class="footer">
@@ -38,26 +40,22 @@
 
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+		<script src="/public/js/bootstrap-datepicker.js"></script>
 		<script>
 			
 
 			$(function(){
-				$("#red, #green, #blue")
-			    .on('change',function(value) {
-			        
-			        function success(data){
-			        	console.log("complete", data);
-			        };
-
-			        var data = {"red": $("#red").val(), "green": $("#green").val(), "blue": $("#blue").val()};
+				console.log("onload ");
+				$("#dataPickerField").on("change", function(elem){
+					var data = {"date": $(this).val()};
 			        $.ajax({
 					  type: "POST",
-					  url: "http://localhost:3000/setcolor",
+					  url: "http://localhost:8080/sleep/date/select",
 					  data: data,
-					  success: success,
+					  success: function(data){console.log(data);},
 					  dataType: "json"
 					});
-			    })
+				});
 			});
 		</script>
 	</body>
