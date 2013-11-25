@@ -5,7 +5,7 @@ module.exports = function(app){
   var models = require(__dirname + "/models");
   var input = sleep.newInputSet();
   var async = require("async");
-
+  var request = require("request");
   var _getSleepDataByDate = function(date, success, error){
     if(common.cache.get("currentUser") == null) error("No user found on cache");
     common.addCredentialsToInput(input, common.cache.get("currentUser"));
@@ -69,7 +69,25 @@ module.exports = function(app){
         res.send(resultsByRange);
      });
   };
+  
+  var onUserSelectDate = function(req, res, next){
+      var _date = req.body.date;
+      common.cache.put('date', _date);
+      _getSleepDataByDate(_date, function(data){
+        var hours = data.totalMinutesAsleep;
+        var color = common.getColorBySleepTime(models.ColorScheme, hours);
+        request.get("http://128.122.98.12/data/put/r/" + color[0]);
+        request.get("http://128.122.98.12/data/put/g/" + color[1]);
+        request.get("http://128.122.98.12/data/put/b/" + color[2]);
 
+        res.send(color[0]+","+color[1]+","+color[2]);
+      }, function(error){
+        res.send("ERROR: Could not retreive data");
+      });
+
+  };
+
+  app.post("/sleep/date/select", onUserSelectDate);
   app.get("/sleep/date/:date", renderSleepData);
   app.get("/sleep/range/:start/:end", renderSleepDataByPeriode);
 };
