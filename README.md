@@ -1,7 +1,7 @@
 Wellness Mirror
 ===============
 
-Wellness Mirror is a mirror that reads a person’s quantified self data (physical activities, sleep hours, weight…) and translates 
+Wellness Mirror is a mirror that reads a person’s quantified self data (physical activities, sleep hours, weight…) from Fitbit and translates 
 the data into different colors and patterns of light that illuminates users in front of the mirror. 
 In this way, users can see a person’s vigor and vitality through the reflection of themselves altered by the data.
 
