@@ -1,7 +1,7 @@
 var tsession = require("temboo/core/temboosession");
 var common = {
-  consumerKey: "cdcece2633d54bd9bcb3b6b94db3dcd8",
-  consumerSecret: "30b0566ee009456b90dc4e36ea3efca4",
+  consumerKey: "246396abf6cf4585a78c6ab24f335901",
+  consumerSecret: "65be4a7e054b4972ae3542a5e35f2387",
   userAccount:"dayvson", 
   appName:"wellnessmirror", 
   appKey:"a07807fe-bd06-4dca-8",

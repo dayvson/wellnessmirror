@@ -7,7 +7,7 @@ module.exports = function(app){
   var finalizeOAuthInputs = finalizeOAuth.newInputSet();
   var initializeOAuthInputs = initializeOAuth.newInputSet();
   initializeOAuthInputs.set_ConsumerSecret(common.consumerSecret);
-  initializeOAuthInputs.set_ForwardingURL("http://ec2-54-200-31-246.us-west-2.compute.amazonaws.com:8080/credentials");
+  initializeOAuthInputs.set_ForwardingURL("http://localhost:8080/credentials");
   initializeOAuthInputs.set_ConsumerKey(common.consumerKey);
   var finishAuthentication = function(req, res, next){
   
