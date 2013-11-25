@@ -31,7 +31,7 @@ module.exports = function(app){
     _getSleepDataByDate(_date, function(data){
       var hours = data.totalMinutesAsleep;
       var color = common.getColorBySleepTime(models.ColorScheme, hours);
-      res.send(color);
+      res.send(color[0]+","+color[1]+";"+color[2]);
     }, function(error){
       res.send("ERROR: Could not retreive data");
     });
