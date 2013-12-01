@@ -1,0 +1,128 @@
+/* Space out content a bit */
+body {
+  background-color: black;
+  background-image: url("/public/img/bg.png");
+  background-repeat: no-repeat;
+  background-position:center top; 
+}
+
+
+.container{
+    padding-top: 10px;
+    padding-bottom: 0px;
+    margin:auto;
+    height:100%;
+    min-width: 360px;
+}
+
+
+/* Custom page header */
+.header {
+  position: fixed;
+  margin:0px;
+  padding: 0px;
+  width: 100%;
+  height: 80px;
+  background-color: white;
+  border-bottom: 1px solid #c9c9c9;
+}
+
+.header li{
+  padding-top: 10px;
+}
+
+.header a{
+  color: #666;
+}
+
+
+.header .selected{
+  font-weight: bold;
+    color: #0BF;
+
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+
+/*Login page*/
+
+.login {
+  width: 90%;
+  margin:auto;
+  margin-top: 30px;
+  height: 300px;
+  text-align: center;
+  background-color:white;
+  border-radius: 15px;
+}
+
+.login img{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 50%;
+  }
+
+ .btn {
+  font-size: 24px;
+  padding: 14px 24px;
+  background-color: #0BF;
+  border: none;
+}
+
+.lead{
+  font-size: medium;
+  margin: auto;
+  max-width: 360px;
+  color: #888;
+  padding:10px;
+  padding-bottom: 30px; 
+}
+
+
+
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+  .login{
+    width: 60%;
+    margin-top: 120px;
+    max-width: 730px;
+    padding: 40px;
+    height: 450px;
+   }
+
+   .lead{
+    padding-top:15px;
+    padding-bottom: 50px;
+    font-size: 24px;
+
+   }
+}
+
+
+
+/*Everything but the content gets side spacing for mobile first views*/
+@media handheld{
+
+}
+
+
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+
+}
+
+
+
+
+
