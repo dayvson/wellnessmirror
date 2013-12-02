@@ -7,12 +7,13 @@ body {
 }
 
 
-.container{
+.wrapper{
     padding-top: 10px;
     padding-bottom: 0px;
     margin:auto;
-    height:100%;
-    min-width: 360px;
+    margin-bottom: 0px;
+    min-width: 500px;
+    background-color: white;
 }
 
 
@@ -35,18 +36,68 @@ body {
   color: #666;
 }
 
-
-.header .selected{
-  font-weight: bold;
-    color: #0BF;
+.header img{
+  padding-left: 20px;
 
 }
 
+.header .selected{
+  font-weight: bold;
+  color: #0BF;
+
+}
+
+.header .avatar{
+  height: 40px;
+  margin-top: 10px;
+  margin-right: 20px;
+
+}
+
+
+
+.container{
+  margin:auto;
+  height:100%;
+  min-width: 360px;
+  margin-top:40px;
+  margin-bottom: 0px;
+  padding: 30px;
+
+}
+
+
+
+.choose_title{
+  margin-top: 40px;
+  margin-bottom: 20px;
+  color:#666;
+  font-size: 16px;
+  border-bottom: 1px solid #c9c9c9;
+  clear:both;
+}
+
+#dataPickerField{
+  margin-top:10px;
+  float: left;
+  height: 45px;
+  background-image: url('/public/img/calendar.png');
+  background-repeat:  no-repeat; 
+  padding-left: 35px;
+  margin-right: 10px;
+  font-size: 18px;
+  color: #666;
+}
+
+
+
 /* Custom page footer */
 .footer {
-  padding-top: 19px;
+  margin-top: 180px;
+  padding-top: 10px;
   color: #777;
   border-top: 1px solid #e5e5e5;
+
 }
 
 
@@ -60,6 +111,7 @@ body {
   text-align: center;
   background-color:white;
   border-radius: 15px;
+  min-width: 150px;
 }
 
 .login img{
@@ -71,26 +123,112 @@ body {
  .btn {
   font-size: 24px;
   padding: 14px 24px;
-  background-color: #0BF;
   border: none;
+ background-color: #0BF;
+  margin-top:10px;
 }
 
-.lead{
+.btn:hover{
+  background-color:#0CF;
+  color:#FFF;
+  border: none;
+}
+.submit{
+  height: 45px;
+  width: 160px;
+  border-radius: 3px;
+  color:#333;
+  background-color: #e5e5e5;
+  font-size: 20;
+  padding: 7px 14px;
+  border: 1px #666 solid;
+  margin-bottom: 50px;
+
+}
+
+
+.highlight{
+  height: 45px;
+  width: 160px;
+  border-radius: 3px;
+  color:#FFF;
+  background-color: #0BF;
+  font-size: 20;
+  padding: 7px 14px;
+  border: none;
+  margin-bottom: 50px;
+
+}
+
+
+
+.modes{
+  float: left;
+  margin-right: 10px;
+}
+
+.signin{
   font-size: medium;
   margin: auto;
-  max-width: 360px;
+  max-width: 400px;
   color: #888;
-  padding:10px;
+  padding:20px;
   padding-bottom: 30px; 
+}
+
+.result_overall{
+    text-align: center;
+    margin-top: 50px;
+    color:#666;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.result_overall span{
+    color:#0BF;
+    font-size: 30px;
+
+}
+
+.legend{
+  float: left;
+  width:30px;
+  height: 15px;
+  margin-right: 10px; 
+}
+
+.nav li{
+  margin-bottom: 10px;
+}
+
+.bed{
+    background-color: blue;
+}
+
+.sedentary{
+      background-color: cyan;
+}
+
+.light{
+      background-color: yellow;
+}
+.fairly{
+      background-color: orange;
+}
+.very{
+      background-color: red;
 }
 
 
 
 
 /* Customize container */
-@media (min-width: 768px) {
-  .container {
-    max-width: 730px;
+@media (min-width: 600px) {
+  .wrapper {
+    max-width: 830px;
+  }
+  .container{
+    max-width: 830px;
   }
   .login{
     width: 60%;
@@ -100,7 +238,7 @@ body {
     height: 450px;
    }
 
-   .lead{
+   .signin{
     padding-top:15px;
     padding-bottom: 50px;
     font-size: 24px;
