@@ -16,8 +16,9 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(app.router);
 app.use('/public', express.static(__dirname + '/public'));
-require(__dirname + "/auth")(app);
-require(__dirname + "/sleep")(app);
-require(__dirname + "/index")(app);
+require(__dirname + "/controllers/auth")(app);
+require(__dirname + "/controllers/sleep")(app);
+require(__dirname + "/controllers/index")(app);
+require(__dirname + "/controllers/activities")(app);
 
 app.listen(8080);

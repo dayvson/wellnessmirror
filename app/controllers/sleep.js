@@ -1,8 +1,9 @@
 module.exports = function(app){
-  var common = require(__dirname + "/common");
+  var common = require(__dirname + "/../common");
   var Fitbit = require("temboo/Library/Fitbit/Sleep");
+  var ArduinoProxy = require(__dirname + "/../arduino");
   var sleep = new Fitbit.GetSleep(common.session);
-  var models = require(__dirname + "/models");
+  var models = require(__dirname + "/../models");
   var input = sleep.newInputSet();
   var async = require("async");
   var request = require("request");
@@ -76,11 +77,9 @@ module.exports = function(app){
       _getSleepDataByDate(_date, function(data){
         var hours = data.totalMinutesAsleep;
         var color = common.getColorBySleepTime(models.ColorScheme, hours);
-        request.get("http://128.122.98.12/data/put/r/" + color[0]);
-        request.get("http://128.122.98.12/data/put/g/" + color[1]);
-        request.get("http://128.122.98.12/data/put/b/" + color[2]);
-
-        res.send(color[0]+","+color[1]+","+color[2]);
+        var pattern = common.getPatternBySteps(8000);
+        ArduinoProxy.sendOverall(color, pattern);
+        res.send(data);
       }, function(error){
         res.send("ERROR: Could not retreive data");
       });

@@ -1,13 +1,13 @@
 module.exports = function(app){
-  var common = require(__dirname + "/common");
+  var common = require(__dirname + "/../common");
   var Fitbit = require("temboo/Library/Fitbit/OAuth");
-  var models = require(__dirname + "/models");
+  var models = require(__dirname + "/../models");
   var finalizeOAuth = new Fitbit.FinalizeOAuth(common.session);
   var initializeOAuth = new Fitbit.InitializeOAuth(common.session);
   var finalizeOAuthInputs = finalizeOAuth.newInputSet();
   var initializeOAuthInputs = initializeOAuth.newInputSet();
   initializeOAuthInputs.set_ConsumerSecret(common.consumerSecret);
-  initializeOAuthInputs.set_ForwardingURL("http://localhost:8080/credentials");
+  initializeOAuthInputs.set_ForwardingURL(common.forwardURL);
   initializeOAuthInputs.set_ConsumerKey(common.consumerKey);
   var finishAuthentication = function(req, res, next){
   

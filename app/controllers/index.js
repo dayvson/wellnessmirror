@@ -1,5 +1,5 @@
 module.exports = function(app){
-  var common = require(__dirname + "/common");
+  var common = require(__dirname + "/../common");
   var Fitbit = require("temboo/Library/Fitbit/Profile");
   var getUserInfo = new Fitbit.GetUserInfo(common.session);
   var input = getUserInfo.newInputSet();

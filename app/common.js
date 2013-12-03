@@ -5,7 +5,7 @@ var common = {
   userAccount:"dayvson", 
   appName:"wellnessmirror", 
   appKey:"a07807fe-bd06-4dca-8",
-
+  forwardURL:"http://localhost:8080/credentials",
 	getDateDifferenceIndays: function(startDateStr, endDateStr){
     var startDate = new Date(startDateStr + " 00:00:00");
     var endDate = new Date(endDateStr + " 00:00:00");
@@ -28,6 +28,14 @@ var common = {
         return colors[prop].color;
       }
     }
+  }, 
+  getPatternBySteps: function(patterns, steps){
+    for(var prop in patterns){
+      if(steps >= patterns[prop].min && steps <= patterns[prop].max){
+        return patterns[prop].pattern;
+      }
+    }
+    return 1;
   }
 };
 common.cache = require("memory-cache");
