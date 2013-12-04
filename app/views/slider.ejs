@@ -43,9 +43,10 @@
 				<p><a class="btn submit" href="#" role="button">Submit</a></p>
       	 		<p class = "choose_title">Choose visualization mode</p>
 				<p><a class="btn highlight modes" href="#" role="button">Overall mood</a></p>
-				<p><a class="btn submit " href="#" role="button">By Percentage</a></p>
+				<p><a class="btn submit modes" href="#" role="button">By Percentage</a></p>
 				<div class = "result_overall">
-					<p>From 11/29/2013 to 11/29/2013, your sleep and active levels are:</p>
+					<p>From 11/29/2013 to 11/29/2013, </p> 
+					<p>your sleep and active levels are:</p>
 					<p><span>DROWSY AND LAZY</span></p>
 				</div>	
 				<!--<div class = "result_percentage">
@@ -71,19 +72,19 @@
 		<script>
 			
 
-			$(function(){
-				console.log("onload ");
-				$("#dataPickerField").on("change", function(elem){
-					var data = {"date": $(this).val()};
-			        $.ajax({
-					  type: "POST",
-					  url: "http://localhost:8080/sleep/date/select",
-					  data: data,
-					  success: function(data){console.log(data);},
-					  dataType: "json"
-					});
-				});
-			});
+			// $(function(){
+			// 	console.log("onload ");
+			// 	$("#dataPickerField").on("change", function(elem){
+			// 		var data = {"date": $(this).val()};
+			//         $.ajax({
+			// 		  type: "POST",
+			// 		  url: "http://localhost:8080/sleep/date/select",
+			// 		  data: data,
+			// 		  success: function(data){console.log(data);},
+			// 		  dataType: "json"
+			// 		});
+			// 	});
+			// });
 		</script>
 	</body>
 	</body>

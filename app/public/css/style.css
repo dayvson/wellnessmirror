@@ -12,7 +12,7 @@ body {
     padding-bottom: 0px;
     margin:auto;
     margin-bottom: 0px;
-    min-width: 500px;
+    min-width: 480px;
     background-color: white;
 }
 
@@ -79,7 +79,6 @@ body {
 
 #dataPickerField{
   margin-top:10px;
-  float: left;
   height: 45px;
   background-image: url('/public/img/calendar.png');
   background-repeat:  no-repeat; 
@@ -163,7 +162,7 @@ body {
 
 
 .modes{
-  float: left;
+  margin: 0px;
   margin-right: 10px;
 }
 
@@ -177,17 +176,26 @@ body {
 }
 
 .result_overall{
+    margin:auto;
     text-align: center;
-    margin-top: 50px;
+    padding-top: 50px;
     color:#666;
     font-size: 16px;
     font-weight: bold;
+    clear:both;
+    min-width: 100px;
+
 }
 
 .result_overall span{
     color:#0BF;
     font-size: 30px;
 
+}
+
+.result_percentage {
+    padding-top: 30px;
+    clear:both;
 }
 
 .legend{
@@ -242,9 +250,23 @@ body {
     padding-top:15px;
     padding-bottom: 50px;
     font-size: 24px;
-
    }
+
+  #dataPickerField{
+    float: left;
+  }
+
+  .modes{
+  float: left;
+  }
+
+  .result_overall p{
+  float:left; 
+  padding-left: 5px;
+  }
+
 }
+
 
 
 

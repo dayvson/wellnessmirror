@@ -1,22 +1,16 @@
 //Created by Maria Paula Saba and Maxwell Dayvson da Silva
 
-//neopixels strip
 #include <Adafruit_NeoPixel.h>
 #include <Bridge.h>
 #include <HttpClient.h>
 #include <math.h>
 
-/* NEO_RGB     Pixels are wired for RGB bitstream
- NEO_GRB     Pixels are wired for GRB bitstream
- NEO_KHZ400  400 KHz bitstream (e.g. FLORA pixels)
- NEO_KHZ800  800 KHz bitstream (e.g. High Density LED strip)*/
-#define TOTAL_STRIPS 2;
+
 long time;
 long interval = 2000; 
 long previousMillis = 0;
 int alpha;
 int periode = 2000;
-int totalStrips = TOTAL_STRIPS;
 char rChar[4] = "125";
 char gChar[4] = "125";
 char bChar[4] = "125";
@@ -34,7 +28,12 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(102, 6, NEO_GRB + NEO_KHZ800);
 
 void setup() {
   Bridge.begin();  // make contact with the linux processor
+  Serial.begin(9600);
+  while(!Serial);
+  Serial.print("sketch started");
   initLeds();
+  
+  
 }
 
 void initLeds(){
@@ -43,6 +42,8 @@ void initLeds(){
 }
 
 void loop() {
+  Serial.println("Working");
+
   Bridge.get("r", rChar, 256);
   Bridge.get("g", gChar, 256);
   Bridge.get("b", bChar, 256);
@@ -56,9 +57,17 @@ void loop() {
   r = atoi(rChar);
   g = atoi(gChar);
   b = atoi(bChar);
-  if(atoi(mode) == 1) activities();
-  else setColorAndPattern(r, g, b, atoi(pattern));
-
+  r = 255;
+  g = 0;
+  b = 0;
+ if(atoi(mode) == 1) activities();
+ else setColorAndPattern(r, g, b, atoi(pattern));
+  
+ Serial.println(r);
+ Serial.println(g);
+ Serial.println(b);
+ 
+  
 }
 
 void setColorAndPattern(int r, int g, int b, int pattern){
