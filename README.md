@@ -13,6 +13,7 @@ In this way, users can see a person’s vigor and vitality through the reflectio
 <img src="http://itp.nyu.edu/~msd403/blog/wp-content/uploads/2013/11/photo-2-copy.jpg" width="100%"/>
 <img src="http://f.cl.ly/items/0a3H3l0j2l1O1N3V1s2L/mirror_power_box.jpg" width="100%" />
 <img src="http://f.cl.ly/items/3X1v1z1x3y2f130a2a3I/photo%202.JPG"  width="100%"/>
+<img src="http://f.cl.ly/items/162z2M2Y0f3E1Q2v3s0n/colors.png" width="100%" />
 <img src="http://f.cl.ly/items/3k0j2V1q431u1k0a380f/photo%204.JPG"  width="100%" />
 
 ##AUTHORS
