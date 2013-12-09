@@ -5,8 +5,11 @@
 #include <HttpClient.h>
 #include <math.h>
 
-
+#define TIMECTL_MAXTICKS  4294967295L
+#define TIMECTL_INIT      0
 long time;
+unsigned long flashTimeMark=0;
+unsigned long flashTimeMark2=0;
 long interval = 2000; 
 long previousMillis = 0;
 int alpha;
@@ -16,24 +19,23 @@ char gChar[4] = "125";
 char bChar[4] = "125";
 char pattern[2] = "2";
 char mode[2] = "1";
-char very_active[5] = "5";
-char sendentary[5] = "20";
-char fairly_active[5] = "10";
-char lightly_active[5] = "25";
-char sleep_time[5] = "40";
+char *very_active = "5";
+char *sendentary = "20";
+char *fairly_active = "10";
+char *lightly_active = "25";
+char *sleep_time = "40";
 int r = 0;
 int g = 0;
 int b = 255;
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(102, 6, NEO_GRB + NEO_KHZ800);
 
 void setup() {
+//  Serial.begin(9600);  // initialize serial communication
+//  while(!Serial);      // do nothing until the serial monitor is opened
+//  Serial.println("Starting bridge...\n");
+
   Bridge.begin();  // make contact with the linux processor
-  Serial.begin(9600);
-  while(!Serial);
-  Serial.print("sketch started");
   initLeds();
-  
-  
 }
 
 void initLeds(){
@@ -41,12 +43,12 @@ void initLeds(){
   strip.show();
 }
 
+int index = 0;
 void loop() {
-  Serial.println("Working");
-
   Bridge.get("r", rChar, 256);
   Bridge.get("g", gChar, 256);
   Bridge.get("b", bChar, 256);
+
   Bridge.get("pattern", pattern, 2);
   Bridge.get("mode", mode, 2);
   Bridge.get("sleep_time", sleep_time, 5);
@@ -57,17 +59,10 @@ void loop() {
   r = atoi(rChar);
   g = atoi(gChar);
   b = atoi(bChar);
-  r = 255;
-  g = 0;
-  b = 0;
- if(atoi(mode) == 1) activities();
- else setColorAndPattern(r, g, b, atoi(pattern));
-  
- Serial.println(r);
- Serial.println(g);
- Serial.println(b);
- 
-  
+
+  if(atoi(mode) == 1) activities();
+  else setColorAndPattern(r, g, b, atoi(pattern));
+
 }
 
 void setColorAndPattern(int r, int g, int b, int pattern){
@@ -97,23 +92,26 @@ void setColorAndPattern(int r, int g, int b, int pattern){
 
 
 void activities() {
-
-  int last = atoi(very_active);
-  setPixelColorByRange(0, last, 255,0,255);
-  setPixelColorByRange(last, last+atoi(sendentary), 255,0,0);
-  last+=atoi(sendentary);
-  setPixelColorByRange(last, last+atoi(fairly_active), 255,255,0);
-  last+=atoi(fairly_active);
-  setPixelColorByRange(last, last+atoi(lightly_active), 0,255,255);
-  last+=atoi(lightly_active);
-  setPixelColorByRange(last, last+atoi(sleep_time), 255,155,0);
+  int last = 0;
+  last = atoi(sleep_time);
   strip.setBrightness(100);
-  strip.show();
+  setPixelColorByRange(0, last, 0,0,255);
+  setPixelColorByRange(last, last+atoi(sendentary), 0,255,255);
+  last+=atoi(sendentary);
+  setPixelColorByRange(last, last+atoi(lightly_active), 255,255,0);
+  last+=atoi(lightly_active);
+  setPixelColorByRange(last, last+atoi(fairly_active), 255,155,0);
+  last+=atoi(fairly_active);
+  setPixelColorByRange(last, last+atoi(very_active), 255,0,0);
 }
 
 void setPixelColorByRange(int start, int _end, int r, int g, int b){
-  for(uint16_t i=start; i<_end; i++) {
-    strip.setPixelColor(i,strip.Color(r, g, b));  
+  while(start<_end) {
+    if(waitTime(&flashTimeMark, 10)){
+      strip.setPixelColor(start,strip.Color(r, g, b));
+      strip.show();
+      start++;
+    }   
   }
 }
 
@@ -128,21 +126,26 @@ void sedentary(int r, int g, int b){
 
 void lazy(int r, int g, int b){
  int dur = 100;
- for (int pos=0; pos<dur; pos++){
+ int pos = 0;
+ while(pos<dur){
+   if(waitTime(&flashTimeMark, 10)){
     alpha = easeInOutBounce(pos, 0, 100, 100);
     tintPixels(r, g, b, alpha);
-    delay(50); 
+    pos++;
+   }
  }
- delay(300);
- for (int pos=0; pos<dur; pos++){
+ pos = 0;
+ while(pos<dur){
+   if(waitTime(&flashTimeMark, 10)){
     alpha = linearTween(pos, 100, -100, 100);
     tintPixels(r, g, b, alpha);
-    delay(10);
+    pos++;
+   }
  }
 }
 
 void notrecorded(int r, int g, int b){
-    tintPixels(r, g, b, 100);
+  tintPixels(r, g, b, 100);
 }
 
 void hyperative(int r, int g, int b){
@@ -155,21 +158,24 @@ void vigorous(int r, int g, int b){
   fadePixels(time, r, g, b);
 }
 
+void linearFadeAnimation(int r, int g, int b, int _start, int _end, int _dur){
+  int alpha = 0;
+  for (int pos=0; pos<_dur;){
+    if(waitTime(&flashTimeMark, 10)){
+      alpha = linearTween(pos, _start, _end, _dur);
+      tintPixels(r, g, b, alpha);
+      pos++;
+    }
+  }
+}
 void ideal(int r, int g, int b){
   tintPixels(r,g,b,100);
-  delay(3000);
-  int dur = 20;
-  for(int i = 0; i<3; i++){
-   for (int pos=0; pos<dur; pos++){
-      alpha = linearTween(pos, 100, -100, dur);
-      tintPixels(r, g, b, alpha);
-      delay(10);
-   }
-   for (int pos=0; pos<dur; pos++){
-      alpha = linearTween(pos, 0, 100, dur);
-      tintPixels(r, g, b, alpha);
-      delay(10); 
-   }
+  if(waitTime(&flashTimeMark, 3000)){
+    int dur = 20;  
+    for(int i = 0; i<3; i++){
+     linearFadeAnimation(r,b, g, 100, -100, dur);
+     linearFadeAnimation(r,b, g, 0, 100, dur);
+    }
   }
 }
 
@@ -188,7 +194,6 @@ void tintPixels(int r, int g, int b, int a){
 }
 
 
-// t: current time, b: beginning value, c: change in value, d: duration
 float linearTween (float t, float b, float c, float d) {
   return c*t/d + b;
 }
@@ -218,4 +223,21 @@ float easeInOutBounce (float t, float b, float c, float d) {
     return easeInBounce (t*2, 0, c, d) * .5 + b;
   }
   return easeOutBounce (t*2-d, 0, c, d) * .5 + c*.5 + b;
+}
+
+int waitTime(unsigned long *timeMark, unsigned long timeInterval){
+  unsigned long timeCurrent;
+  unsigned long timeElapsed;
+  int result = false;
+  timeCurrent = millis();
+  if(timeCurrent<*timeMark){
+    timeElapsed=(TIMECTL_MAXTICKS-*timeMark)+timeCurrent;
+  }else{
+    timeElapsed=timeCurrent-*timeMark;  
+  }
+  if(timeElapsed>=timeInterval) {
+    *timeMark=timeCurrent;
+    result=true;
+  }
+  return(result);  
 }
