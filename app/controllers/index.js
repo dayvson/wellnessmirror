@@ -44,9 +44,16 @@ module.exports = function(app){
     res.send(red+","+green+";"+blue);
   };
 
+  var logout = function(req, res, next){
+    common.cache.del("currentUser");
+    res.redirect("/login");
+  };
+
+  app.get("/logout", logout);
   app.get("/color", getColor);
   app.post("/setcolor", setColor);
   app.get("/index", index);
   app.get("/", index);
+
 
 };

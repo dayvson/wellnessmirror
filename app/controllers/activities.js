@@ -9,9 +9,7 @@ module.exports = function(app){
   var _getActivitiesDataByDate = function(date, success, error){
     if(common.cache.get("currentUser") == null) error("No user found on cache");
     common.addCredentialsToInput(input, common.cache.get("currentUser"));
-    console.log("DATE", date);
     input.set_Date(date);
-    console.log(input);
     activities.execute(
         input,
         function(results){
@@ -26,7 +24,7 @@ module.exports = function(app){
   };
   
   var onActivitiesSelectDate = function(req, res, next){
-      var _date = req.body.date;
+      var _date = req.param("date");
       common.cache.put('date', _date);
       _getActivitiesDataByDate(_date, function(data){
         data.sleep = 400;
@@ -38,5 +36,5 @@ module.exports = function(app){
       });
   };
 
-  app.get("/activities/date/select", onActivitiesSelectDate);
+  app.get("/activities/date/select/:date", onActivitiesSelectDate);
 };

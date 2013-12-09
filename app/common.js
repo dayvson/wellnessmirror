@@ -25,14 +25,15 @@ var common = {
     var hours = time/60;
     for(var prop in colors){
       if(hours >= colors[prop].min && hours <= colors[prop].max){
-        return colors[prop].color;
+        return colors[prop];
       }
     }
   }, 
   getPatternBySteps: function(patterns, steps){
     for(var prop in patterns){
+      console.log(patterns[prop].min, patterns[prop].max, "$$$$$$$$$$$$$");
       if(steps >= patterns[prop].min && steps <= patterns[prop].max){
-        return patterns[prop].pattern;
+        return patterns[prop];
       }
     }
     return 1;

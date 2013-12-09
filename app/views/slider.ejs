@@ -21,7 +21,7 @@
 			  <ul class="nav nav-pills pull-right">
 		          <li ><a href="#" class="selected">Home</a></li>
 		          <li ><a href="#">About</a></li>
-		          <li ><a href="#"> <%= user.nickname %></a></li>
+		          <li ><a href="/logout"> <%= user.nickname %> (logout)</a></li>
 		      </ul>
 		    </div> 
 	 	 </div>
@@ -29,25 +29,19 @@
       	 	<div class="container">	
       	 		<p class = "choose_title">Choose time range</p>
 		        <form>
-					<div class="input-append" id="datePicker" data-date="2013-11-10" data-date-format="yyyy-mm-dd">
-						<input class="span2 date" size="16" id="dataPickerField" type="text" value="2013-11-10" >
-
+					<div class="input-append" >
+						<input  size="16" class="datep" data-date-format="yyyy-mm-dd" id="dataPickerField" type="text">
+						<input size="16" class="datep" id="dataPickerField2" data-date-format="yyyy-mm-dd" type="text">
 					</div>
 				</form>
-				<form>
-					<div class="input-append" id="datePicker" data-date="2013-11-10" data-date-format="yyyy-mm-dd">
-						<input class="span2 date" size="16" id="dataPickerField" type="text" value="2013-11-10">
-						<span class="add-on"></span>
-					</div>
-				</form>
-				<p><a class="btn submit" href="#" role="button">Submit</a></p>
       	 		<p class = "choose_title">Choose visualization mode</p>
-				<p><a class="btn highlight modes" href="#" role="button">Overall mood</a></p>
-				<p><a class="btn submit modes" href="#" role="button">By Percentage</a></p>
+				<p><a class="btn submit highlight modes" href="#" role="button" id="overall">Overall mood</a></p>
+				<p><a class="btn submit modes" href="#" role="button" id="percentage" >By Percentage</a></p>
 				<div class = "result_overall">
-					<p>From 11/29/2013 to 11/29/2013, </p> 
-					<p>your sleep and active levels are:</p>
-					<p><span>DROWSY AND LAZY</span></p>
+					<!--p>From 11/29/2013 to 11/29/2013, </p--> 
+					<p style="display:block">your sleep and active levels are:</p>
+
+					<p><span id="stateResult"></span></p>
 				</div>	
 				<!--<div class = "result_percentage">
 					<ul class="nav">
@@ -67,24 +61,59 @@
 
 
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
 		<script src="/public/js/bootstrap-datepicker.js"></script>
 		<script>
 			
 
-			// $(function(){
-			// 	console.log("onload ");
-			// 	$("#dataPickerField").on("change", function(elem){
-			// 		var data = {"date": $(this).val()};
-			//         $.ajax({
-			// 		  type: "POST",
-			// 		  url: "http://localhost:8080/sleep/date/select",
-			// 		  data: data,
-			// 		  success: function(data){console.log(data);},
-			// 		  dataType: "json"
-			// 		});
-			// 	});
-			// });
+			$(function(){
+				var now = new Date();
+				$(".datep").datepicker({format: 'yyyy-mm-dd'}).on('changeDate', function(ev) {
+ 						 $(this).datepicker('hide');
+				}).val(now.getFullYear() + "-" + (now.getMonth()+1) + "-" + (now.getDate() <= 9 ? "0"+ now.getDate() : now.getDate()));
+				$("#submitbtn").on("click", function(elem){
+					var data = {"date": $("#dataPickerField").val()};
+					console.log("onchange");
+			        $.ajax({
+					  type: "POST",
+					  url: "http://localhost:8080/sleep/date/select",
+					  data: data,
+					  success: function(data){
+					  	$("#stateResult").html(data.sleep + " AND " + data.step);
+					  },
+					  dataType: "json"
+					});
+				});
+
+				$("#overall").on("click", function(elem){
+					var data = {"date": $("#dataPickerField").val()};
+					$("#percentage").removeClass("highlight");
+					$(this).addClass("highlight");
+					console.log("onchange");
+			        $.ajax({
+					  type: "POST",
+					  url: "http://localhost:8080/sleep/date/select",
+					  data: data,
+					  success: function(data){
+					  	$("#stateResult").html(data.sleep.toUpperCase() + " AND " + data.step.toUpperCase());
+					  },
+					  dataType: "json"
+					});
+				});
+				$("#percentage").on("click", function(elem){
+					var data = {"date": $("#dataPickerField").val()};
+					$("#overall").removeClass("highlight");
+					$(this).addClass("highlight");
+					console.log("onchange");
+			        $.ajax({
+					  type: "GET",
+					  url: "http://localhost:8080/activities/date/select/" + data["date"],
+					  success: function(data){
+					  },
+					  dataType: "json"
+					});
+				});
+			});
+			
 		</script>
 	</body>
 	</body>
