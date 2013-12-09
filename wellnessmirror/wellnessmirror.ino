@@ -4,7 +4,8 @@
 #include <Bridge.h>
 #include <HttpClient.h>
 #include <math.h>
-
+#define PIN 6
+int pirState = LOW;
 #define TIMECTL_MAXTICKS  4294967295L
 #define TIMECTL_INIT      0
 long time;
@@ -27,6 +28,8 @@ char *sleep_time = "40";
 int r = 0;
 int g = 0;
 int b = 255;
+int hasMotion = LOW;
+int wasEnabled = false;
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(102, 6, NEO_GRB + NEO_KHZ800);
 
 void setup() {
@@ -59,10 +62,16 @@ void loop() {
   r = atoi(rChar);
   g = atoi(gChar);
   b = atoi(bChar);
-
-  if(atoi(mode) == 1) activities();
-  else setColorAndPattern(r, g, b, atoi(pattern));
-
+  if(checkMotionDetection()){
+    if(atoi(mode) == 1) activities();
+    else setColorAndPattern(r, g, b, atoi(pattern));  
+  }
+  if(waitTime(&flashTimeMark2, 60000)){
+    hasMotion = digitalRead(10);
+    if(hasMotion == LOW){
+       wasEnabled = false; 
+    }
+  }
 }
 
 void setColorAndPattern(int r, int g, int b, int pattern){
@@ -115,6 +124,16 @@ void setPixelColorByRange(int start, int _end, int r, int g, int b){
   }
 }
 
+int checkMotionDetection(){
+   if(waitTime(&flashTimeMark, 1000)){
+     hasMotion = digitalRead(10);
+     if (hasMotion == HIGH) {
+        wasEnabled = true;
+        return wasEnabled; 
+     }
+   }
+   return wasEnabled; 
+}
 void off(int r, int g, int b){
   tintPixels(r, g, b, 0);  
 }
@@ -168,6 +187,7 @@ void linearFadeAnimation(int r, int g, int b, int _start, int _end, int _dur){
     }
   }
 }
+
 void ideal(int r, int g, int b){
   tintPixels(r,g,b,100);
   if(waitTime(&flashTimeMark, 3000)){
@@ -192,7 +212,6 @@ void tintPixels(int r, int g, int b, int a){
   }
   strip.show();
 }
-
 
 float linearTween (float t, float b, float c, float d) {
   return c*t/d + b;
