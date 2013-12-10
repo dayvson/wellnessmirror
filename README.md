@@ -15,7 +15,7 @@ The Arduino Yun gets the values through its REST API from a website, developed i
 
 You can find an extended documentation/evolution version of this project at <a href="http://itp.nyu.edu/~msd403/blog/?p=1301">Maria Paula ITP blog</a> 
 
-##PROTOTYPE IMAGES
+##Prototype Images
 
 <img src="http://itp.nyu.edu/~msd403/blog/wp-content/uploads/2013/11/diagram.jpg" width="100%"/>
 <img src="http://itp.nyu.edu/~msd403/blog/wp-content/uploads/2013/12/legenda-01-1024x566.jpg" width="100%" />
