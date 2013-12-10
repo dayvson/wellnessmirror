@@ -9,9 +9,6 @@
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>
 		<link href="/public/css/style.css" rel="stylesheet">
 		<link href="/public/css/datepicker.css" rel="stylesheet">
-		<style>
-			.hide { display:none;}
-		</style>
 	</head>
 	<body>
 		<div class="header">
@@ -28,19 +25,15 @@
       	<div class="wrapper">
       	 	<div class="container">	
       	 		<p class = "choose_title">Hi <%= user.nickname %>, choose time range</p>
-		        <form>
-					<div class="input-append" >
-						<input  size="16" class="datep" data-date-format="yyyy-mm-dd" id="dataPickerField" type="text">
-						<input size="16" class="datep" id="dataPickerField2" data-date-format="yyyy-mm-dd" type="text">
-					</div>
-				</form>
+				<div class="input-append" >
+					<input  size="16" class="datep" data-date-format="yyyy-mm-dd" id="dataPickerField" type="text">
+					<input size="16" class="datep" id="dataPickerField2" data-date-format="yyyy-mm-dd" type="text">
+				</div>
       	 		<p class = "choose_title">Choose visualization mode</p>
 				<p><a class="btn submit highlight modes" href="#" role="button" id="overall">Overall mood</a></p>
 				<p><a class="btn submit modes" href="#" role="button" id="percentage" >By Percentage</a></p>
 				<div class = "result_overall" id="overall_container" class="hide">
-					<!--p>From 11/29/2013 to 11/29/2013, </p--> 
 					<p style="display:block">your sleep and active levels are:</p>
-
 					<p><span id="stateResult"></span></p>
 				</div>	
 				<div class="result_percentage" id="percentage_container" class="hide">
@@ -57,61 +50,9 @@
 	      		</div>
 			</div>
 		</div>					
-
-
-
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 		<script src="/public/js/bootstrap-datepicker.js"></script>
-				<script>
-			
-
-			$(function(){
-				var now = new Date();
-				$(".datep").datepicker({format: 'yyyy-mm-dd'}).on('changeDate', function(ev) {
- 						 $(this).datepicker('hide');
-				}).val(now.getFullYear() + "-" + (now.getMonth()+1) + "-" + (now.getDate() <= 9 ? "0"+ now.getDate() : now.getDate()));
-
-				$("#overall").on("click", function(elem){
-					var data = {"date": $("#dataPickerField").val()};
-					$("#percentage").removeClass("highlight");
-					$(this).addClass("highlight");
-					
-			        $.ajax({
-					  type: "POST",
-					  url: "http://localhost:8080/sleep/date/select",
-					  data: data,
-					  success: function(data){
-					  	$("#stateResult").html(data.sleep.toUpperCase() + " AND " + data.step.toUpperCase());
-					  	$("#percentage_container").hide();
-					  	$("#overall_container").show();
-					  },
-					  dataType: "json"
-					});
-				});
-				$("#percentage").on("click", function(elem){
-					var data = {"date": $("#dataPickerField").val()};
-					$("#overall").removeClass("highlight");
-					$(this).addClass("highlight");
-					
-			        $.ajax({
-					  type: "GET",
-					  url: "http://localhost:8080/activities/date/select/" + data["date"],
-					  success: function(data){
-					  	$("#percentage_container").show();
-					  	$("#overall_container").hide();
-					  	$("#bed").html(data.sleepTime);
-					  	$("#sedentary").html(data.sedentary);
-					  	$("#light").html(data.lightly);
-					  	$("#fairly").html(data.fairly);
-					  	$("#very").html(data.veryActive);
-					  	$("#stateResult").empty().append(ul);
-					  },
-					  dataType: "json"
-					});
-				});
-			});
-			
-		</script>
+		<script src="/public/js/home.js"></script>
 	</body>
 	</body>
 </html>
