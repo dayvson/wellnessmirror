@@ -62,13 +62,11 @@
 
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 		<script src="/public/js/bootstrap-datepicker.js"></script>
-		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 		<script>
-			google.load('visualization', '1.0', {'packages':['corechart']});
+			
 
 			$(function(){
 				var now = new Date();
-				
 				$(".datep").datepicker({format: 'yyyy-mm-dd'}).on('changeDate', function(ev) {
  						 $(this).datepicker('hide');
 				}).val(now.getFullYear() + "-" + (now.getMonth()+1) + "-" + (now.getDate() <= 9 ? "0"+ now.getDate() : now.getDate()));
@@ -109,23 +107,14 @@
 			        $.ajax({
 					  type: "GET",
 					  url: "http://localhost:8080/activities/date/select/" + data["date"],
-					  success: function(result){
-
-					  	var elem = $("<div />");
-					  	elem.attr("id", "chart_div");
-					  	var data = new google.visualization.DataTable();
-				        data.addColumn('string', 'State');
-				        data.addColumn('number', 'Percentage');
-				        var values = [];
-				        for(var prop in result){
-				        	values.push([prop, result[prop]]);
-				        }
-				        data.addRows(values);
-
-				        var options = {'title':''};
-                    	$("#stateResult").empty().append(elem);
-				        var chart = new google.visualization.PieChart(elem.get(0));
-				        chart.draw(data, options);
+					  success: function(data){
+					  	var ul = $("<ul />");
+					  	for(var prop in data){
+					  		var li = $("<li />");
+					  		li.html(prop + ":" + data[prop] + "%");
+					  		ul.append(li);
+					  	}
+					  	$("#stateResult").empty().append(ul);
 					  },
 					  dataType: "json"
 					});
