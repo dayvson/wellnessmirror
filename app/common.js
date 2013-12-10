@@ -31,7 +31,6 @@ var common = {
   }, 
   getPatternBySteps: function(patterns, steps){
     for(var prop in patterns){
-      console.log(patterns[prop].min, patterns[prop].max, "$$$$$$$$$$$$$");
       if(steps >= patterns[prop].min && steps <= patterns[prop].max){
         return patterns[prop];
       }
