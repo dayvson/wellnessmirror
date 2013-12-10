@@ -1,30 +1,50 @@
 <html>
 	<head>
-		<title>Wellness Mirror Login</title>
+		<title>Wellness Mirror</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<meta name="author" content="Maria Paula Saba/Maxwell Dayvson da Silva">
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>
-		<link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"/>
+		<link href="/public/css/style.css" rel="stylesheet">
+		<link href="/public/css/datepicker.css" rel="stylesheet">
 		<style>
 
 		</style>
 	</head>
 	<body>
-		<div class="container">
-			<div class="header">
-        		<ul class="nav nav-pills pull-right">
-          			<li class="active"><a href="#">Home</a></li>
-          			<li><a href="#">About</a></li>
-        		</ul>
-        		<h3 class="text-muted">Wellness Mirror</h3>
-      		</div>
-			
-		</div>
+		<div class="header">
+		    <div class="wrapper">
+		  	  <a href="/"><img src="/public/img/logo_small.png" title="Wellness Mirror"/></a>
+		   	  <img src="<%= user.avatar %>" class="avatar pull-right" />
+			  <ul class="nav nav-pills pull-right">
+		          <li ><a href="/" >Home</a></li>
+		          <li ><a href="/about" class="selected">About</a></li>
+		          <li ><a href="/logout">Logout</a></li>
+		      </ul>
+		    </div> 
+	 	</div>
+      	<div class="wrapper">
+      	 	<div class="container">	
+      	 		<p class ="about_text">Wellness is a mirror that reads a person’s quantified self data from Fitbit, like physical activities, steps and sleep hours, and translates it into different colors and patterns of light that illuminates users. In this way, users can see their own energy levels through the reflection of themselves altered by the data.
+      	 		<br/><br/>
+      	 		The mirror has two modes of visualization: <span>overall mode</span> and <span>percentages</span>. Overall mode reads sleep hours to determine color and steps to change the blinking patterns. Table of correspondenve can be seen below:</p>				
+				<!--img class="about_img" src="/public/img/photo.jpg" />-->
+				<img class="about_img" src="/public/img/legenda.jpg" />
+
+	
+				<div class="footer">
+	        	<p>© Maria Paula Saba / Maxwell Dayvson da Silva 2013</p>
+	      		</div>
+			</div>
+		</div>					
+
+
 
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+		<script src="/public/js/bootstrap-datepicker.js"></script>
+	</body>
 	</body>
 </html>

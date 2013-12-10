@@ -1,7 +1,7 @@
 /* Space out content a bit */
 body {
   background-color: black;
-  background-image: url("/public/img/bg.png");
+  background-image: url("/public/img/bg2.jpg");
   background-repeat: no-repeat;
   background-position:center top; 
 }
@@ -63,9 +63,9 @@ body {
   margin-top:40px;
   margin-bottom: 0px;
   padding: 30px;
+  min-height: 800px;
 
 }
-
 
 
 .choose_title{
@@ -89,10 +89,28 @@ body {
 }
 
 
+.about_text{
+    margin: auto;
+    width: 600px;
+    margin-top: 50px;
+}
+
+
+.about_img{
+  display: block;
+  margin: auto;
+  width:640px;
+  height: 354px;
+}
+
+.about_text span{
+  font-weight: bold;
+}
+
 
 /* Custom page footer */
 .footer {
-  margin-top: 180px;
+  margin-top: 100px;
   padding-top: 10px;
   color: #777;
   border-top: 1px solid #e5e5e5;
@@ -136,11 +154,11 @@ body {
   height: 45px;
   width: 160px;
   border-radius: 3px;
-  color:#333;
+  color:#666;
   background-color: #e5e5e5;
   font-size: 20;
   padding: 7px 14px;
-  border: 1px #666 solid;
+  border: 1px #999 solid;
   margin-bottom: 50px;
 
 }
@@ -181,7 +199,6 @@ body {
     padding-top: 50px;
     color:#666;
     font-size: 16px;
-    font-weight: bold;
     clear:both;
     min-width: 100px;
 
@@ -189,7 +206,8 @@ body {
 
 .result_overall span{
     color:#0BF;
-    font-size: 30px;
+    font-size: 20px;
+    font-weight: bold;
 
 }
 
@@ -243,13 +261,13 @@ body {
     margin-top: 120px;
     max-width: 730px;
     padding: 40px;
-    height: 450px;
+    height: 420px;
    }
 
    .signin{
     padding-top:15px;
     padding-bottom: 50px;
-    font-size: 24px;
+    font-size: 20px;
    }
 
   #dataPickerField{

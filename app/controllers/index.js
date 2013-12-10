@@ -15,7 +15,7 @@ module.exports = function(app){
       }
     );
   };
-  var index = function(req, res, next){
+  var getUserData = function(req, res, callback){
     var currentUser = common.cache.get("currentUser");
     if(currentUser == null){
       res.redirect("/login");
@@ -23,11 +23,14 @@ module.exports = function(app){
     }
     getUserProfileData(function(data){
       var userData = JSON.parse(data);
-      res.render("slider", userData);
+      callback(userData);
     });
-    
-    
+  };
 
+  var index = function(req, res, next){
+      getUserData(req, res, function(data){
+        res.render("home", data);
+      });
   };
   var setColor = function(req, res, next) {
     memory.put("red", req.body.red);
@@ -49,11 +52,18 @@ module.exports = function(app){
     res.redirect("/login");
   };
 
+
+  var about = function(req, res, next){
+    getUserData(req, res, function(data){
+      res.render("about", data);
+    });
+  };
+
   app.get("/logout", logout);
+  app.get("/about", about);
   app.get("/color", getColor);
   app.post("/setcolor", setColor);
   app.get("/index", index);
   app.get("/", index);
-
 
 };

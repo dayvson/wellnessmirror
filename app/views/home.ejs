@@ -1,0 +1,127 @@
+<html>
+	<head>
+		<title>Wellness Mirror</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="">
+		<meta name="author" content="Maria Paula Saba/Maxwell Dayvson da Silva">
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>
+		<link href="/public/css/style.css" rel="stylesheet">
+		<link href="/public/css/datepicker.css" rel="stylesheet">
+		<style>
+
+		</style>
+	</head>
+	<body>
+		<div class="header">
+		    <div class="wrapper">
+		  	  <a href="#"><img src="/public/img/logo_small.png" title="Wellness Mirror"/></a>
+		   	  <img src="<%= user.avatar %>" class="avatar pull-right" />
+			  <ul class="nav nav-pills pull-right">
+		          <li ><a href="/" class="selected">Home</a></li>
+		          <li ><a href="/about">About</a></li>
+		          <li ><a href="/logout">Logout</a></li>
+		      </ul>
+		    </div> 
+	 	 </div>
+      	<div class="wrapper">
+      	 	<div class="container">	
+      	 		<p class = "choose_title">Hi <%= user.nickname %>, choose time range</p>
+		        <form>
+					<div class="input-append" >
+						<input  size="16" class="datep" data-date-format="yyyy-mm-dd" id="dataPickerField" type="text">
+						<input size="16" class="datep" id="dataPickerField2" data-date-format="yyyy-mm-dd" type="text">
+					</div>
+				</form>
+      	 		<p class = "choose_title">Choose visualization mode</p>
+				<p><a class="btn submit highlight modes" href="#" role="button" id="overall">Overall mood</a></p>
+				<p><a class="btn submit modes" href="#" role="button" id="percentage" >By Percentage</a></p>
+				<div class = "result_overall">
+					<!--p>From 11/29/2013 to 11/29/2013, </p--> 
+					<p style="display:block">Your sleep and active levels are:</p>
+
+					<p><span id="stateResult"></span></p>
+				</div>	
+				<!--<div class = "result_percentage">
+					<ul class="nav">
+						<li><div class="legend bed"></div>time in bed</li>
+						<li><div class="legend sedentary"></div>sedentary</li>
+						<li><div class="legend light"></div>light active</li>
+						<li><div class="legend fairly"></div>fairly active</li>
+						<li><div class="legend very"></div>very active</li>
+					</ul>
+				</div>-->
+				<div class="footer">
+	        	<p>© Maria Paula Saba / Maxwell Dayvson da Silva 2013</p>
+	      		</div>
+			</div>
+		</div>					
+
+
+
+		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+		<script src="/public/js/bootstrap-datepicker.js"></script>
+		<script>
+			
+
+			$(function(){
+				var now = new Date();
+				$(".datep").datepicker({format: 'yyyy-mm-dd'}).on('changeDate', function(ev) {
+ 						 $(this).datepicker('hide');
+				}).val(now.getFullYear() + "-" + (now.getMonth()+1) + "-" + (now.getDate() <= 9 ? "0"+ now.getDate() : now.getDate()));
+				$("#submitbtn").on("click", function(elem){
+					var data = {"date": $("#dataPickerField").val()};
+					console.log("onchange");
+			        $.ajax({
+					  type: "POST",
+					  url: "http://localhost:8080/sleep/date/select",
+					  data: data,
+					  success: function(data){
+					  	$("#stateResult").html(data.sleep + " AND " + data.step);
+					  },
+					  dataType: "json"
+					});
+				});
+
+				$("#overall").on("click", function(elem){
+					var data = {"date": $("#dataPickerField").val()};
+					$("#percentage").removeClass("highlight");
+					$(this).addClass("highlight");
+					console.log("onchange");
+			        $.ajax({
+					  type: "POST",
+					  url: "http://localhost:8080/sleep/date/select",
+					  data: data,
+					  success: function(data){
+					  	$("#stateResult").html(data.sleep.toUpperCase() + " AND " + data.step.toUpperCase());
+					  },
+					  dataType: "json"
+					});
+				});
+				$("#percentage").on("click", function(elem){
+					var data = {"date": $("#dataPickerField").val()};
+					$("#overall").removeClass("highlight");
+					$(this).addClass("highlight");
+					
+			        $.ajax({
+					  type: "GET",
+					  url: "http://localhost:8080/activities/date/select/" + data["date"],
+					  success: function(data){
+					  	var ul = $("<ul />");
+					  	for(var prop in data){
+					  		var li = $("<li />");
+					  		li.html(prop + ":" + data[prop] + "%");
+					  		ul.append(li);
+					  	}
+					  	$("#stateResult").empty().append(ul);
+					  },
+					  dataType: "json"
+					});
+				});
+			});
+			
+		</script>
+	</body>
+	</body>
+</html>
