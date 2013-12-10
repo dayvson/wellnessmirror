@@ -37,21 +37,21 @@
       	 		<p class = "choose_title">Choose visualization mode</p>
 				<p><a class="btn submit highlight modes" href="#" role="button" id="overall">Overall mood</a></p>
 				<p><a class="btn submit modes" href="#" role="button" id="percentage" >By Percentage</a></p>
-				<div class = "result_overall">
+				<div class = "result_overall" id="overall_container"  style="display:none;">
 					<!--p>From 11/29/2013 to 11/29/2013, </p--> 
 					<p style="display:block">your sleep and active levels are:</p>
 
 					<p><span id="stateResult"></span></p>
 				</div>	
-				<!--<div class = "result_percentage">
+				<div class="result_percentage" id="percentage_container" style="display:none;">
 					<ul class="nav">
-						<li><div class="legend bed"></div>time in bed</li>
-						<li><div class="legend sedentary"></div>sedentary</li>
-						<li><div class="legend light"></div>light active</li>
-						<li><div class="legend fairly"></div>fairly active</li>
-						<li><div class="legend very"></div>very active</li>
+						<li><div class="legend bed"></div><span id="bed"></span> time in bed</li>
+						<li><div class="legend sedentary"></div><span id="sedentary"></span>sedentary</li>
+						<li><div class="legend light"></div><span id="light"></span>light active</li>
+						<li><div class="legend fairly"></div><span id="fairly"></span>fairly active</li>
+						<li><div class="legend very"></div><span id="very"></span>very active</li>
 					</ul>
-				</div>-->
+				</div>
 				<div class="footer">
 	        	<p>© Maria Paula Saba / Maxwell Dayvson da Silva 2013</p>
 	      		</div>
@@ -70,19 +70,6 @@
 				$(".datep").datepicker({format: 'yyyy-mm-dd'}).on('changeDate', function(ev) {
  						 $(this).datepicker('hide');
 				}).val(now.getFullYear() + "-" + (now.getMonth()+1) + "-" + (now.getDate() <= 9 ? "0"+ now.getDate() : now.getDate()));
-				$("#submitbtn").on("click", function(elem){
-					var data = {"date": $("#dataPickerField").val()};
-					console.log("onchange");
-			        $.ajax({
-					  type: "POST",
-					  url: "http://localhost:8080/sleep/date/select",
-					  data: data,
-					  success: function(data){
-					  	$("#stateResult").html(data.sleep + " AND " + data.step);
-					  },
-					  dataType: "json"
-					});
-				});
 
 				$("#overall").on("click", function(elem){
 					var data = {"date": $("#dataPickerField").val()};
@@ -95,6 +82,8 @@
 					  data: data,
 					  success: function(data){
 					  	$("#stateResult").html(data.sleep.toUpperCase() + " AND " + data.step.toUpperCase());
+					  	$("#percentage_container").hide();
+					  	$("#overall_container").show();
 					  },
 					  dataType: "json"
 					});
@@ -108,12 +97,13 @@
 					  type: "GET",
 					  url: "http://localhost:8080/activities/date/select/" + data["date"],
 					  success: function(data){
-					  	var ul = $("<ul />");
-					  	for(var prop in data){
-					  		var li = $("<li />");
-					  		li.html(prop + ":" + data[prop] + "%");
-					  		ul.append(li);
-					  	}
+					  	$("#percentage_container").show();
+					  	$("#overall_container").hide();
+					  	$("#bed").html(data.sleepTime);
+					  	$("#sedentary").html(data.sedentary);
+					  	$("#light").html(data.lightly);
+					  	$("#fairly").html(data.fairly);
+					  	$("#very").html(data.veryActive);
 					  	$("#stateResult").empty().append(ul);
 					  },
 					  dataType: "json"

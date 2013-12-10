@@ -22,7 +22,7 @@ module.exports = function(app){
         }
     );
   };
-  var calculatePercentageOfActivitities = function(activities){
+  var convertActivitiesToTotalLeds = function(activities){
     var total = activities.sleep + activities.veryActiveMinutes + activities.sedentaryMinutes + activities.fairlyActiveMinutes + activities.lightlyActiveMinutes;
     var totalLeds = 102;
     var result = {
@@ -39,8 +39,8 @@ module.exports = function(app){
       var _date = req.param("date");
       common.cache.put('date', _date);
       _getActivitiesDataByDate(_date, function(data){
-        data.sleep = 400;
-        var percentage = calculatePercentageOfActivitities(data);
+        data.sleep = 400; 
+        var percentage = convertActivitiesToTotalLeds(data);
         ArduinoProxy.sendActivities(percentage);
         res.send(percentage);
       }, function(error){
