@@ -1,7 +1,7 @@
 /* Space out content a bit */
 body {
   background-color: black;
-  background-image: url("/public/img/bg2.jpg");
+  background-image: url("/public/img/bg.jpg");
   background-repeat: no-repeat;
   background-position:center top; 
 }
