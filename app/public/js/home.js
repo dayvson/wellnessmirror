@@ -14,7 +14,7 @@ $(function(){
 		  type: "GET",
 		  url: apphost + "/sleep/range/" + data.start + "/" + data.end,
 		  success: function(result){
-		  	$("#stateResult").html(result.sleep.toUpperCase() + " " + "AND " + result.step.toUpperCase() + "<br/> Sleep time:"+ " " + result.hours + ":" + result.minutes +  "h <br/>" + "Steps:"+ " " + result.steps);
+		  	$("#stateResult").html(result.sleep.toUpperCase() +" AND " + result.step.toUpperCase() +"<br/> Sleep time:"+ " " + result.hours + ":" + result.minutes +  "h ");
 		  	$("#percentage_container").hide();
 		  	$("#overall_container").show();
 		  },
