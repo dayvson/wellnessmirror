@@ -1,9 +1,65 @@
 /* Space out content a bit */
 body {
   background-color: black;
-  background-image: url("/public/img/bg.jpg");
+  background-image: url("/public/img/bg0.jpg");
+  background-repeat: no-repeat;
+  background-position:center top;
+}
+
+
+@-webkit-keyframes crossfade {
+  from{
+    -moz-transition: opacity 1s linear;
+    -ms-transition: opacity 1s linear;
+    -o-transition: opacity 1s linear;
+    transition: opacity 1s linear;
+    opacity:0;
+  }
+  to{
+   -moz-transition: opacity 1s linear;
+    -ms-transition: opacity 1s linear;
+    -o-transition: opacity 1s linear;
+    transition: opacity 1s linear;
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes end {
+  from{
+    -moz-transition: opacity 1s linear;
+    -ms-transition: opacity 1s linear;
+    -o-transition: opacity 1s linear;
+    transition: opacity 1s linear;
+
+    opacity:1;
+    
+  }
+  to{
+   -moz-transition: opacity 1s linear;
+    -ms-transition: opacity 1s linear;
+    -o-transition: opacity 1s linear;
+    transition: opacity 1s linear;
+    opacity:0;
+  }
+}
+
+.container {
+  position:relative;
+  z-index: 1;
+}
+.bgcrossfade {
+  background-image: url("/public/img/bg1.jpg");
   background-repeat: no-repeat;
   background-position:center top; 
+  width:100%; height:900px;
+  position:absolute;
+  opacity:0;
+  top:0;left:0;
+  z-index:0;
+  animation: crossfade 5s infinite alternate, end 5s infinite alternate;
+  -webkit-animation: crossfade 5s infinite alternate, end 5s infinite alternate;
+  animation-delay:5s, 5s;
+  -webkit-animation-delay:5s, 5s;
 }
 
 .hide { display:none;}
