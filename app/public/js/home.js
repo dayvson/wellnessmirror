@@ -3,7 +3,8 @@ $(function(){
 	$(".datep").datepicker({format: 'yyyy-mm-dd'}).on('changeDate', function(ev) {
 				 $(this).datepicker('hide');
 	}).val(now.getFullYear() + "-" + (now.getMonth()+1) + "-" + (now.getDate() <= 9 ? "0"+ now.getDate() : now.getDate()));
-
+	now.setDate(now.getDate()-1);
+	$("#dataPickerField").val(now.getFullYear() + "-" + (now.getMonth()+1) + "-" + (now.getDate() <= 9 ? "0"+ now.getDate() : now.getDate()));
 	$("#overall").on("click", function(elem){
 		var data = {"date": $("#dataPickerField").val()};
 		$("#percentage").removeClass("highlight");
@@ -11,10 +12,10 @@ $(function(){
 		
 	    $.ajax({
 		  type: "POST",
-		  url: "http://localhost:8080/sleep/date/select",
+		  url: apphost + "/sleep/date/select",
 		  data: data,
 		  success: function(data){
-		  	$("#stateResult").html(data.sleep.toUpperCase() + " AND " + data.step.toUpperCase());
+		  	$("#stateResult").html(data.sleep.toUpperCase() + " " + data.hours + ":" + data.minutes +  "h AND " + data.step.toUpperCase());
 		  	$("#percentage_container").hide();
 		  	$("#overall_container").show();
 		  },
@@ -28,7 +29,7 @@ $(function(){
 		
 	    $.ajax({
 		  type: "GET",
-		  url: "http://localhost:8080/activities/date/select/" + data["date"],
+		  url: apphost + "/activities/date/select/" + data["date"],
 		  success: function(data){
 		  	$("#percentage_container").show();
 		  	$("#overall_container").hide();
@@ -42,4 +43,5 @@ $(function(){
 		  dataType: "json"
 		});
 	});
-	});
+	$("#overall").trigger("click");
+});

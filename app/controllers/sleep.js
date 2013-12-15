@@ -40,10 +40,12 @@ module.exports = function(app){
       var _date = req.body.date;
       common.cache.put('date', _date);
       common.getFitbitData(_date, function(data){
-        var hours = data.totalMinutesAsleep;
-        var sleep = common.getColorBySleepTime(models.ColorScheme, hours);
+        var minutes = data.totalMinutesAsleep;
+        var sleep = common.getColorBySleepTime(models.ColorScheme, minutes);
         var step = common.getPatternBySteps(models.Patterns, data.steps);
-        var result = {"step": step.state, "sleep": sleep.state};
+        var result = {"step": step.state, "hours": Math.floor(minutes/60), 
+                      "minutes": Math.floor(minutes % 60),
+                      "sleep": sleep.state};
         ArduinoProxy.sendOverall(sleep.color, step.pattern);
         res.send(result);
       }, function(error){

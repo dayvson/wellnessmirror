@@ -9,6 +9,9 @@
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>
 		<link href="/public/css/style.css" rel="stylesheet">
 		<link href="/public/css/datepicker.css" rel="stylesheet">
+		<script>
+			var apphost = "http://localhost:8080";
+		</script>
 	</head>
 	<body>
 		<div class="header">
@@ -26,19 +29,19 @@
       	 	<div class="container">	
       	 		<p class = "choose_title">Hi <%= user.nickname %>, choose time range</p>
 				<div class="input-append" >
-					<input  size="16" class="datep" data-date-format="yyyy-mm-dd" id="dataPickerField" type="text">
+					<input  size="16" class="datep" id="dataPickerField" data-date-format="yyyy-mm-dd" id="dataPickerField" type="text">
 					<input size="16" class="datep" id="dataPickerField2" data-date-format="yyyy-mm-dd" type="text">
 				</div>
       	 		<p class = "choose_title">Choose visualization mode</p>
 				<p><a class="btn submit highlight modes" href="#" role="button" id="overall">Overall mood</a></p>
 				<p><a class="btn submit modes" href="#" role="button" id="percentage" >By Percentage</a></p>
 				<div class = "result_overall" id="overall_container" class="hide">
-					<p style="display:block">your sleep and active levels are:</p>
-					<p><span id="stateResult"></span></p>
+					<p>Your sleep and active levels are:</p>
+					<span  style="display:block" id="stateResult"></span>
 				</div>	
 				<div class="result_percentage" id="percentage_container" class="hide">
 					<ul class="nav">
-						<li><div class="legend bed"></div><span id="bed"></span>% time in bed</li>
+						<li><div class="legend bed"></div><span id="bed"></span>% sleeping</li>
 						<li><div class="legend sedentary"></div><span id="sedentary"></span>% sedentary</li>
 						<li><div class="legend light"></div><span id="light"></span>% light active</li>
 						<li><div class="legend fairly"></div><span id="fairly"></span>% fairly active</li>
