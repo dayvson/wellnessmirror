@@ -6,16 +6,15 @@ $(function(){
 	now.setDate(now.getDate()-1);
 	$("#dataPickerField").val(now.getFullYear() + "-" + (now.getMonth()+1) + "-" + (now.getDate() <= 9 ? "0"+ now.getDate() : now.getDate()));
 	$("#overall").on("click", function(elem){
-		var data = {"date": $("#dataPickerField").val()};
+		var data = {"start": $("#dataPickerField").val(), "end":$("#dataPickerField2").val()};
 		$("#percentage").removeClass("highlight");
 		$(this).addClass("highlight");
 		
 	    $.ajax({
-		  type: "POST",
-		  url: apphost + "/sleep/date/select",
-		  data: data,
-		  success: function(data){
-		  	$("#stateResult").html(data.sleep.toUpperCase() + " " + data.hours + ":" + data.minutes +  "h AND " + data.step.toUpperCase());
+		  type: "GET",
+		  url: apphost + "/sleep/range/" + data.start + "/" + data.end,
+		  success: function(result){
+		  	$("#stateResult").html(result.sleep.toUpperCase() + " " + result.hours + ":" + result.minutes +  "h AND " + result.step.toUpperCase());
 		  	$("#percentage_container").hide();
 		  	$("#overall_container").show();
 		  },
@@ -23,21 +22,21 @@ $(function(){
 		});
 	});
 	$("#percentage").on("click", function(elem){
-		var data = {"date": $("#dataPickerField").val()};
+		var data = {"start": $("#dataPickerField").val(), "end":$("#dataPickerField2").val()};
 		$("#overall").removeClass("highlight");
 		$(this).addClass("highlight");
 		
 	    $.ajax({
 		  type: "GET",
-		  url: apphost + "/activities/date/select/" + data["date"],
-		  success: function(data){
+		  url: apphost + "/activities/range/" + data.start + "/" + data.end,
+		  success: function(result){
 		  	$("#percentage_container").show();
 		  	$("#overall_container").hide();
-		  	$("#bed").html(data.sleepTime);
-		  	$("#sedentary").html(data.sedentary);
-		  	$("#light").html(data.lightly);
-		  	$("#fairly").html(data.fairly);
-		  	$("#very").html(data.veryActive);
+		  	$("#bed").html(result.sleepTime);
+		  	$("#sedentary").html(result.sedentary);
+		  	$("#light").html(result.lightly);
+		  	$("#fairly").html(result.fairly);
+		  	$("#very").html(result.veryActive);
 		  	$("#stateResult").empty().append(ul);
 		  },
 		  dataType: "json"

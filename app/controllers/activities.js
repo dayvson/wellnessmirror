@@ -16,17 +16,19 @@ module.exports = function(app){
     return result;
   }
   
-  var onActivitiesSelectDate = function(req, res, next){
-      var _date = req.param("date");
-      common.getFitbitData(_date, function(data){ 
-        var percentage = convertActivitiesToTotalLeds(data);
-        ArduinoProxy.sendActivities(percentage);
-        res.send(percentage);
-      }, function(error){
-        console.log(error);
-        res.send("ERROR: Could not retreive data");
-      });
+  var onActivitiesDataByRange = function(req, res, next){
+    var _start = req.param("start");
+    var _end = req.param("end");
+    common.getFitbitDataByRange(_start, _end, function(error, data){
+        if(!error){
+          var percentage = convertActivitiesToTotalLeds(data);
+          res.send(percentage);
+          ArduinoProxy.sendActivities(percentage);
+        }else{
+          res.send({"error": "Couldn't not the data"});
+        }
+    });
   };
 
-  app.get("/activities/date/select/:date", onActivitiesSelectDate);
+  app.get("/activities/range/:start/:end", onActivitiesDataByRange);
 };

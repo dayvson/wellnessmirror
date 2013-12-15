@@ -15,47 +15,47 @@
 	</head>
 	<body>
 		<div class="bgcrossfade"></div>
-		<div class="container">
-			<div class="header">
-			    <div class="wrapper">
-			  	  <a href="#"><img src="/public/img/logo_small.png" title="Wellness Mirror"/></a>
-			   	  <img src="<%= user.avatar %>" class="avatar pull-right" />
-				  <ul class="nav nav-pills pull-right">
-			          <li ><a href="/" class="selected">Home</a></li>
-			          <li ><a href="/about">About</a></li>
-			          <li ><a href="/logout">Logout</a></li>
-			      </ul>
-			    </div> 
-		 	 </div>
-	      	<div class="wrapper">
-	      	 	<div class="container">	
-	      	 		<p class = "choose_title">Hi <%= user.nickname %>, choose time range</p>
-					<div class="input-append" >
-						<input  size="16" class="datep" id="dataPickerField" data-date-format="yyyy-mm-dd" id="dataPickerField" type="text">
-						<input size="16" class="datep" id="dataPickerField2" data-date-format="yyyy-mm-dd" type="text">
-					</div>
-	      	 		<p class = "choose_title">Choose visualization mode</p>
-					<p><a class="btn submit highlight modes" href="#" role="button" id="overall">Overall mood</a></p>
-					<p><a class="btn submit modes" href="#" role="button" id="percentage" >By Percentage</a></p>
-					<div class = "result_overall" id="overall_container" class="hide">
-						<p>Your sleep and active levels are:</p>
-						<span  style="display:block" id="stateResult"></span>
-					</div>	
-					<div class="result_percentage" id="percentage_container" class="hide">
-						<ul class="nav">
-							<li><div class="legend bed"></div><span id="bed"></span>% sleeping</li>
-							<li><div class="legend sedentary"></div><span id="sedentary"></span>% sedentary</li>
-							<li><div class="legend light"></div><span id="light"></span>% light active</li>
-							<li><div class="legend fairly"></div><span id="fairly"></span>% fairly active</li>
-							<li><div class="legend very"></div><span id="very"></span>% very active</li>
-						</ul>
-					</div>
-					<div class="footer">
-		        	<p>© Maria Paula Saba / Maxwell Dayvson da Silva 2013</p>
-		      		</div>
+		<div class="header">
+		    <div class="wrapper">
+		  	  <a href="#"><img src="/public/img/logo_small.png" title="Wellness Mirror"/></a>
+		   	  <img src="<%= user.avatar %>" class="avatar pull-right" />
+			  <ul class="nav nav-pills pull-right">
+		          <li ><a href="/" class="selected">Home</a></li>
+		          <li ><a href="/about">About</a></li>
+		          <li ><a href="/logout">Logout</a></li>
+		      </ul>
+		    </div> 
+	 	</div>
+	 	<div class="content">
+      	<div class="wrapper">
+      	 	<div class="container">	
+      	 		<p class = "choose_title">Hi <%= user.nickname %>, choose time range</p>
+				<div class="input-append" >
+					<input  size="16" class="datep" id="dataPickerField" data-date-format="yyyy-mm-dd" type="text" />
+					<input size="16" class="datep" id="dataPickerField2" data-date-format="yyyy-mm-dd" type="text" />
 				</div>
-			</div>	
-		</div>				
+      	 		<p class = "choose_title">Choose visualization mode</p>
+				<p><a class="btn submit highlight modes" href="#" role="button" id="overall">Overall mood</a></p>
+				<p><a class="btn submit modes" href="#" role="button" id="percentage" >By Percentage</a></p>
+				<div class = "result_overall" id="overall_container" class="hide">
+					<p>Your sleep and active levels are:</p>
+					<span  style="display:block" id="stateResult"></span>
+				</div>	
+				<div class="result_percentage" id="percentage_container" class="hide">
+					<ul class="nav">
+						<li><div class="legend bed"></div><span id="bed"></span>% sleeping</li>
+						<li><div class="legend sedentary"></div><span id="sedentary"></span>% sedentary</li>
+						<li><div class="legend light"></div><span id="light"></span>% light active</li>
+						<li><div class="legend fairly"></div><span id="fairly"></span>% fairly active</li>
+						<li><div class="legend very"></div><span id="very"></span>% very active</li>
+					</ul>
+				</div>
+				<div class="footer">
+	        	<p>© Maria Paula Saba / Maxwell Dayvson da Silva 2013</p>
+	      		</div>
+			</div>
+		</div>	
+		</div>			
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 		<script src="/public/js/bootstrap-datepicker.js"></script>
 		<script src="/public/js/home.js"></script>

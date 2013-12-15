@@ -1,3 +1,4 @@
+var async = require("async");
 var FitbitActivities = require("temboo/Library/Fitbit/Activities");
 var FitbitSleep = require("temboo/Library/Fitbit/Sleep");
 var tsession = require("temboo/core/temboosession");
@@ -54,7 +55,11 @@ common.getPatternBySteps = function(patterns, steps){
 };
 
 common.getFitbitData = function(date, success, error){
-  if(common.cache.get("currentUser") == null) error("No user found on cache");
+  console.log(common.cache.get("currentUser"));
+  if(common.cache.get("currentUser") == null) {
+    error("No user found on cache");
+    return;
+  }
   var _user = common.cache.get("currentUser");
   var _cached = common.cache.get(_user.id + "-" + date);
   if(_cached){
@@ -85,6 +90,44 @@ common.getFitbitData = function(date, success, error){
   };
 
   sleep.execute(inputSleep, onSuccess, onError);
+};
+
+common.getFitbitDataByRange = function(_start, _end, oncomplete){
+   var howmanyDays = common.getDateDifferenceIndays(_start, _end);
+   var startDate = new Date(_start + " 00:00:00");
+   var range = [];
+   var year, month, date;
+   for(var i = 0; i<=howmanyDays; i++){
+       year = startDate.getFullYear();
+       month = startDate.getMonth() >= 9 ? startDate.getMonth() + 1 : "0" + (startDate.getMonth()+1);
+       date = startDate.getDate() > 9 ? startDate.getDate() : "0"+startDate.getDate();
+       range.push(year+"-"+month+"-"+date);
+       startDate.setDate(startDate.getDate()+1);
+   };
+
+   var loadData = function(dateStr, callback){
+      common.getFitbitData(dateStr, function(data){
+        data.date = dateStr;
+        callback(null, data);
+      }, function(error){
+        callback(error, null);
+      });
+   }
+   
+   async.map(range, loadData, function(error, results){
+      var data = {totalMinutesAsleep:0, veryActiveMinutes:0, sedentaryMinutes:0, 
+            fairlyActiveMinutes:0, lightlyActiveMinutes:0, steps:0};
+      for(var i = 0; i<results.length; i++){
+        data.totalMinutesAsleep += results[i].totalMinutesAsleep;
+        data.veryActiveMinutes += results[i].veryActiveMinutes;
+        data.sedentaryMinutes += results[i].sedentaryMinutes;
+        data.fairlyActiveMinutes += results[i].fairlyActiveMinutes;
+        data.lightlyActiveMinutes += results[i].lightlyActiveMinutes;
+        data.steps += results[i].steps;
+      }
+      data.total = results.length;
+      oncomplete(error, data);
+   });
 };
 
 common.cache = require("memory-cache");
