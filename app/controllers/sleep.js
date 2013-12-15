@@ -11,7 +11,7 @@ module.exports = function(app){
         var step = common.getPatternBySteps(models.Patterns, data.steps/data.total);
         var summary = {"step": step.state, "hours": Math.floor(minutes/60), 
                       "minutes": Math.floor(minutes % 60),
-                      "sleep": sleep.state};
+                      "sleep": sleep.state, "steps": data.steps/data.total};
         res.send(summary);
      });
   };

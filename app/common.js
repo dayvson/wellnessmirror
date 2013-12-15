@@ -8,7 +8,7 @@ var common = {
   userAccount:"dayvson", 
   appName:"wellnessmirror", 
   appKey:"a07807fe-bd06-4dca-8",
-  forwardURL:"http://localhost:8080/credentials"
+  forwardURL:"http://ec2-54-200-31-246.us-west-2.compute.amazonaws.com:8080/credentials"
 };
 
 var session = new tsession.TembooSession(common.userAccount, common.appName, common.appKey);
