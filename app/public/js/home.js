@@ -14,7 +14,7 @@ $(function(){
 		  type: "GET",
 		  url: apphost + "/sleep/range/" + data.start + "/" + data.end,
 		  success: function(result){
-		  	$("#stateResult").html(result.sleep.toUpperCase() +" AND " + result.step.toUpperCase() +"<br/> Sleep time:"+ " " + result.hours + ":" + result.minutes +  "h ");
+		  	$("#stateResult").html((result.sleep||"") + " " + result.hours + ":" + result.minutes +  "h and " + (result.step||""));
 		  	$("#percentage_container").hide();
 		  	$("#overall_container").show();
 		  },
@@ -37,7 +37,6 @@ $(function(){
 		  	$("#light").html(result.lightly);
 		  	$("#fairly").html(result.fairly);
 		  	$("#very").html(result.veryActive);
-		  	$("#stateResult").empty().append(ul);
 		  },
 		  dataType: "json"
 		});

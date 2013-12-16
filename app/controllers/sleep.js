@@ -9,6 +9,7 @@ module.exports = function(app){
         var minutes = data.totalMinutesAsleep/data.total;
         var sleep = common.getColorBySleepTime(models.ColorScheme, minutes);
         var step = common.getPatternBySteps(models.Patterns, data.steps/data.total);
+        ArduinoProxy.sendOverall(sleep.color, step.pattern);
         var summary = {"step": step.state, "hours": Math.floor(minutes/60), 
                       "minutes": Math.floor(minutes % 60),
                       "sleep": sleep.state};

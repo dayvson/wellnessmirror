@@ -3,8 +3,8 @@ var FitbitActivities = require("temboo/Library/Fitbit/Activities");
 var FitbitSleep = require("temboo/Library/Fitbit/Sleep");
 var tsession = require("temboo/core/temboosession");
 var common = {
-  consumerKey: "246396abf6cf4585a78c6ab24f335901",
-  consumerSecret: "65be4a7e054b4972ae3542a5e35f2387",
+  consumerKey: "cdcece2633d54bd9bcb3b6b94db3dcd8",
+  consumerSecret: "30b0566ee009456b90dc4e36ea3efca4",
   userAccount:"dayvson", 
   appName:"wellnessmirror", 
   appKey:"a07807fe-bd06-4dca-8",
@@ -118,7 +118,8 @@ common.getFitbitDataByRange = function(_start, _end, oncomplete){
       var data = {totalMinutesAsleep:0, veryActiveMinutes:0, sedentaryMinutes:0, 
             fairlyActiveMinutes:0, lightlyActiveMinutes:0, steps:0};
       for(var i = 0; i<results.length; i++){
-        data.totalMinutesAsleep += results[i].totalMinutesAsleep;
+        if(results[i] == undefined) continue;
+        data.totalMinutesAsleep += results[i].totalMinutesAsleep || 400;
         data.veryActiveMinutes += results[i].veryActiveMinutes;
         data.sedentaryMinutes += results[i].sedentaryMinutes;
         data.fairlyActiveMinutes += results[i].fairlyActiveMinutes;
